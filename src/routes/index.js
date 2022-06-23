@@ -4,26 +4,20 @@ const User = require('../models/User');
 const router = express.Router();
 
 
-router.get('/' , async(req,res,next)=>{
-    try{
-        const users = await User.find({}) ;
-        response({
-            res ,
-            data : users 
-        });
-    }
-    catch(err){
-        next(err)
-    }
-})
-router.use('/home' , require('./home'))
+
+
+
+
 router.use('/auth' , require('./auth'));
 router.use('/user' , require('./user')) ;
 
+
+
+
 router.all('*' , (req,res,next)=>{
     try{
-        let error = new Error('route is not valid') ;
-        error.status = 400 ;
+        let error = new Error('There is no requested route') ;
+        error.status = 404 ;
         throw error ;
     }
     catch(err){
@@ -33,10 +27,16 @@ router.all('*' , (req,res,next)=>{
 
 
 router.use((err,req,res,next)=>{
+    const message = err.message || '' ;
+    const code = err.status || 500 ;
+
     response({
         res , 
-        message : "internet server error" , 
-        status : 500
+        message : "internet server error" ,
+        data : {
+            err : message
+        } ,
+        status : code
     });
 })
 

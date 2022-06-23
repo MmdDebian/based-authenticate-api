@@ -39,7 +39,7 @@ POST /api/auth/login
 note: The jwt token is created at login and registration.
 
 
-note : You must set a header called x-auth-token to go to these paths, otherwise a 403 error will be sent.👇
+note : You must set a header called [ x-auth-token ] to go to these paths, otherwise a 403 error will be sent.👇
 
 
 GET /api/user/

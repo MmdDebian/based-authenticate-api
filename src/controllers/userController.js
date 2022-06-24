@@ -19,13 +19,27 @@ exports.profile = async (req,res,next)=>{
 
 exports.update = async (req,res,next)=>{
     try {
-        const user = await User.updateOne({id:req.user.id},{$set:req.body}) ;
+        const { name , email } = req.body ;
+        
+        let found = await User.findOne({id:req.user.id}) ;
+        found.name = name ;
+        found.email = email ;
+        found.save((err , result)=>{
+            if(err){
+                return response({
+                    res ,
+                    message : 'intertnet server error' ,
+                    status : 500 
+                })
+            }
 
-        response({
-            res ,
-            message : 'successfuly updated' ,
-            data : user ,
+            response({
+                res , 
+                message : 'successfuly updated' , 
+                data : result 
+            })
         })
+
     } 
     catch (error) {
         next(error)

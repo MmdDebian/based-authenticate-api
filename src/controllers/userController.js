@@ -19,11 +19,12 @@ exports.profile = async (req,res,next)=>{
 
 exports.update = async (req,res,next)=>{
     try {
-        const { name , email } = req.body ;
+        const { name  } = req.body ;
         
         let found = await User.findOne({id:req.user.id}) ;
+       
         found.name = name ;
-        found.email = email ;
+        
         found.save((err , result)=>{
             if(err){
                 return response({
